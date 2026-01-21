@@ -1,0 +1,189 @@
+:root {
+  /* Typography */
+  --ff-base: "Barlow Semi Condensed", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --fs-base: 0.8125rem; /* 13px */
+  --fw-500: 500;
+  --fw-600: 600;
+
+  /* Colors (típicos del style-guide del challenge) */
+  --clr-violet: hsl(263, 55%, 52%);
+  --clr-grayish-blue: hsl(217, 19%, 35%);
+  --clr-blackish-blue: hsl(219, 29%, 14%);
+  --clr-white: hsl(0, 0%, 100%);
+
+  --clr-light-gray: hsl(0, 0%, 81%);
+  --clr-light-grayish-blue: hsl(210, 46%, 95%);
+
+  /* Layout tokens */
+  --radius: 0.75rem;
+  --shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.12);
+  --gap: 1.5rem;
+}
+
+/* Base */
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: var(--ff-base);
+  font-size: var(--fs-base);
+  background: var(--clr-light-grayish-blue);
+  color: var(--clr-grayish-blue);
+  line-height: 1.5;
+}
+
+.app-bg {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+}
+
+/* Optional: slightly more breathing room on large */
+@media (min-width: 992px) {
+  .py-lg-6 {
+    padding-block: 4rem !important;
+  }
+}
+
+/* Grid layout */
+.testimonial-grid {
+  display: grid;
+  gap: var(--gap);
+}
+
+/* Desktop layout matching the design:
+   "daniel daniel jonathan kira"
+   "jeanette patrick patrick kira"
+*/
+@media (min-width: 992px) {
+  .testimonial-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-areas:
+      "daniel daniel jonathan kira"
+      "jeanette patrick patrick kira";
+    align-items: start;
+  }
+
+  .t-card--daniel {
+    grid-area: daniel;
+  }
+  .t-card--jonathan {
+    grid-area: jonathan;
+  }
+  .t-card--kira {
+    grid-area: kira;
+  }
+  .t-card--jeanette {
+    grid-area: jeanette;
+  }
+  .t-card--patrick {
+    grid-area: patrick;
+  }
+}
+
+/* Card base */
+.t-card {
+  position: relative;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  background: var(--clr-white);
+  overflow: hidden;
+}
+
+/* Header */
+.t-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-block-end: 1rem;
+}
+
+.t-avatar {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.t-avatar--ring {
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 2px;
+}
+
+.t-meta {
+  line-height: 1.2;
+}
+
+.t-name {
+  font-weight: var(--fw-600);
+  margin: 0;
+}
+
+.t-verified {
+  margin: 0;
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
+
+/* Title & body */
+.t-title {
+  font-weight: var(--fw-600);
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem);
+  line-height: 1.25;
+  margin: 0 0 1rem 0;
+}
+
+.t-body {
+  margin: 0;
+  opacity: 0.7;
+}
+
+/* Variants */
+.t-card--daniel {
+  background: var(--clr-violet);
+  color: var(--clr-white);
+}
+
+.t-card--daniel::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 1.5rem;
+  inline-size: 6.5rem;
+  block-size: 6.5rem;
+  background: url("../images/bg-pattern-quotation.svg") no-repeat;
+  background-size: contain;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.t-card--jonathan {
+  background: var(--clr-grayish-blue);
+  color: var(--clr-white);
+}
+
+.t-card--patrick {
+  background: var(--clr-blackish-blue);
+  color: var(--clr-white);
+}
+
+.t-card--jeanette,
+.t-card--kira {
+  background: var(--clr-white);
+  color: var(--clr-grayish-blue);
+}
+
+/* Improve contrast for light cards */
+.t-card--jeanette .t-verified,
+.t-card--kira .t-verified {
+  color: var(--clr-grayish-blue);
+}
+
+/* Reduce motion preference (good practice even if no animations) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}
